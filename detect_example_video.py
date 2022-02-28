@@ -10,7 +10,11 @@ mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
     min_detection_confidence=0.7, min_tracking_confidence=0.5)
 
-cap = cv2.VideoCapture(0)
+#ood = mp_ood.ObjectDetection(
+#    min_detection_confidence=0.5) 
+
+#cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('example.mp4')
 
 def data_clean(landmark):
   
@@ -33,13 +37,12 @@ def data_clean(landmark):
 
     for i in without_garbage:
         i = i.strip()
-        if 'z:' not in i:
-            clean.append(i[2:])
+        clean.append(i[2:])
 
     for i in range(0, len(clean)):
         clean[i] = float(clean[i])
 
-    print([clean])    
+    
     return([clean])
 
   except:
@@ -60,23 +63,28 @@ while cap.isOpened():
   # pass by reference.
   image.flags.writeable = False
   results = hands.process(image)
-
+  #ood_results = ood.process(image)
   # Draw the hand annotations on the image.
   image.flags.writeable = True
 
   image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+   
+  #for detection in results.detections:
+  #    mp_drawing.draw_detection(image, detection)
+
 
   if results.multi_hand_landmarks:
     for hand_landmarks in results.multi_hand_landmarks:
-      #print(hand_landmarks)
       mp_drawing.draw_landmarks(
           image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
+      print(hand_landmarks)
     cleaned_landmark = data_clean(results.multi_hand_landmarks)
 
     if cleaned_landmark:
-      clf = joblib.load('model.pkl')
-      y_pred = clf.predict(cleaned_landmark)
+      #clf = joblib.load('model.pkl')
+      #y_pred = clf.predict(cleaned_landmark)
+      y_pred = "dummy"
       image = cv2.putText(image, str(y_pred[0]), (50,150), cv2.FONT_HERSHEY_SIMPLEX,  3, (0,0,255), 2, cv2.LINE_AA) 
     
   cv2.imshow('MediaPipe Hands', image)
