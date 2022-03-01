@@ -1,0 +1,7 @@
+mediapipe
+joblib
+pandas
+seaborn 
+scikit-learn
+matplotlib
+jupyter
