@@ -49,8 +49,7 @@ def data_clean(landmark):
 
 while cap.isOpened():
   success, image = cap.read()
-  
-  image = cv2.flip(image, 1)
+
   
   if not success:
     break
@@ -68,8 +67,6 @@ while cap.isOpened():
 
   image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
    
-  #for detection in results.detections:
-  #    mp_drawing.draw_detection(image, detection)
 
 
   if results.multi_hand_landmarks:
@@ -78,10 +75,8 @@ while cap.isOpened():
           image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
       print(hand_landmarks)
-    cleaned_landmark = data_clean(results.multi_hand_landmarks)
+    # cleaned_landmark = data_clean(results.multi_hand_landmarks)
 
-
-    
   cv2.imshow('MediaPipe Hands', image)
   
   if cv2.waitKey(5) & 0xFF == 27:
