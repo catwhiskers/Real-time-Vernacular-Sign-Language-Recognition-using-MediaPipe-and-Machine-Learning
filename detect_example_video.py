@@ -5,7 +5,6 @@ import numpy as np
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
-
 # For webcam input:
 hands = mp_hands.Hands(
     min_detection_confidence=0.7, min_tracking_confidence=0.5)
@@ -81,11 +80,7 @@ while cap.isOpened():
       print(hand_landmarks)
     cleaned_landmark = data_clean(results.multi_hand_landmarks)
 
-    if cleaned_landmark:
-      #clf = joblib.load('model.pkl')
-      #y_pred = clf.predict(cleaned_landmark)
-      y_pred = "dummy"
-      image = cv2.putText(image, str(y_pred[0]), (50,150), cv2.FONT_HERSHEY_SIMPLEX,  3, (0,0,255), 2, cv2.LINE_AA) 
+
     
   cv2.imshow('MediaPipe Hands', image)
   
